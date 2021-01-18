@@ -1,0 +1,33 @@
+.main-cntr{
+    
+}
+.main-cntr>div{
+    padding: 10px; 
+    vertical-align: top;
+    display: inline-block;
+}
+.side-nav-wrp{
+    width: 340px;
+    height: 100vh;
+    margin-right: 10px;
+}
+.side-nav {
+    padding: 15px 20px;
+}
+.side-nav .nav-lnk{
+    line-height: 27px;
+}
+
+.side-nav .nav-lnk a{
+    color: #3b5998;
+}
+
+.right-pane{
+    width: calc(100% - 350px);
+    box-shadow: 0 2px 2px 2px rgba(0,0,0,0.04);
+}
+
+.analytics-form-wrp {
+    padding: 7px 10px 10px 10px;
+    max-width: 320px;
+}

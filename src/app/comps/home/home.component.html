@@ -1,0 +1,88 @@
+<app-header></app-header>
+
+<br>
+<span (click)="showSideMenu = !showSideMenu;lineChartData.slice()" style="user-select: none; padding: 10px;cursor: pointer;"><i class="fa fa-bars" aria-hidden="true"></i></span>
+
+<div class="main-cntr" >
+    <div class="side-nav-wrp" *ngIf="showSideMenu" @sidebarAnimation>
+        <div class="side-nav" >
+            <h4 style="">{{serv.user.business_name}}</h4>
+            
+            <div class="nav-lnk">
+                <a [routerLink]="['/product']">Add new Product</a>
+            </div>
+            <div class="nav-lnk">
+                <a [routerLink]="['/user']">My Profile</a>
+            </div>
+        </div>
+    </div>
+    <div @rightPaneAnimation class="right-pane" [ngStyle]="{'width' : (showSideMenu) ? 'calc(100% - 350px)' : '100%' }" >
+        <div class="analytics-form-wrp"  style="display: flex;" >
+            <div style="min-width: 100px;line-height: 30px;">
+                Analytics for :
+            </div>
+            <select [ngModel]="selectedProductForAnalytics" (ngModelChange)="selectedProductForAnalytics = $event;onChangeAnalyticsProduct($event)" style="max-width: 320px;display: inline;" >
+                <option [ngValue]="" >ALL</option>
+                <option [ngValue]="product._id" *ngFor="let product of serv.user.products">{{product.name | slice :0:50}}</option>
+            </select>
+            <div style="padding: 0 20px; line-height: 30px;text-align: center;">
+                From 
+            </div>
+            <select [ngModel]="fromDate" (ngModelChange)="fromDate = $event;onChangeAnalyticsProduct($event)" style="min-width: 100px;display: inline;" >
+                <option [ngValue]="dte" *ngFor="let dte of fromDates">{{dte | date: 'MM/dd/yyyy'}} </option>
+            </select>
+            <div style="padding:0 10px;line-height: 30px;">
+                to 
+            </div>
+            <select [ngModel]="toDate" (ngModelChange)="toDate = $event;onChangeAnalyticsProduct($event)" style="min-width: 100px;display: inline;" >
+                <option [ngValue]="dte" *ngFor="let dte of toDates">{{dte | date: 'MM/dd/yyyy'}} </option>
+            </select>            
+        </div>
+
+        <div class="chartjs-container" style="position: relative;">
+            <canvas baseChart height="300" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+                [plugins]="lineChartPlugins" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+
+        <br><br> <br><br>
+
+        <div class="h4">Analytics</div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, tenetur nisi? Fugit nobis rerum amet nulla, cum aspernatur, nisi doloribus officia est dolorum itaque impedit error repellendus eum! Delectus, pariatur.</p>
+
+ 
+        <div >
+
+            <div class="chartjs-container" style="position: relative;">
+                <canvas baseChart  height="50"
+                    [data]="doughnutChartData" 
+                    [labels]="doughnutChartLabels"  
+                    [chartType]="doughnutChartType">
+                </canvas>
+            </div>
+
+            <br><br> <br><br>
+
+            <div class="chartjs-container" style="position: relative;">
+                <canvas baseChart height="250"
+                    [datasets]="barChartData" 
+                    [labels]="barChartLabels" 
+                    [options]="barChartOptions"
+                    [plugins]="barChartPlugins" 
+                    [legend]="barChartLegend" 
+                    [colors]="lineChartColors"
+                    [chartType]="barChartType">
+                </canvas>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+<app-footer></app-footer>

@@ -1,0 +1,173 @@
+<div  @coverAnimation  *ngIf="updateFormType != null" style="position: fixed;background: #fff;opacity: 0.85;z-index: 999;width:100%;height: 100vh;"></div>
+
+<div  @formAnimation  *ngIf="updateFormType != null" style="position: fixed;background: #ffff;box-shadow: 0 0 1px 1px #ccc; min-width:420px;z-index: 1111;top: 10vh; left: calc(50% - 180px);border-radius: 3px; padding: 5px 0 20px; ">
+	<div style="font-size: 18px;text-align: center;line-height: 70px;">{{updateFormTitle}}</div>
+	<!-- update name -->
+	<form *ngIf="
+		updateFormType == 'name' ||
+		updateFormType == 'email' ||
+		updateFormType == 'contact' 
+		" class="col-md offset-md" [formGroup]="singleUpdateForm" (ngSubmit)="update()">
+		<input type="text" class="" formControlName="field_value" />
+		<button type="submit" class="btn btn-primary">Update</button>
+	</form> 
+
+	<!-- add address -->
+	<form  *ngIf="updateFormType == 'home_address' || updateFormType == 'office_address'" class="col-md offset-md address-form" [formGroup]="addressForm" (ngSubmit)="addAddress();">
+		<input type="text" class=""
+			placeholder="Address line 1" formControlName="line_one" />
+		<input type="text" class=""
+			placeholder="Address line 2" formControlName="line_two" />
+		<input type="text" class=""
+			placeholder="Address line 3" formControlName="line_three" />
+		<input type="text" class=""
+			placeholder="City" formControlName="city" />
+		<input type="text" class=""
+			placeholder="State" formControlName="state" />
+		<input type="text" class=""
+			placeholder="Pincode" formControlName="pincode" />
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
+	<a title="Close" (click)="updateFormType = null" style="color: red;display: block;position: absolute;right: 18px;bottom: 18px;cursor:pointer;"><i class="fa fa-times" style="color: red;font-size: 15px;"></i></a>
+</div>
+
+
+
+<app-header></app-header>
+
+
+<div class="pamw" >
+	<!-- left profile pane -->
+	<div class="pdgf">
+		<br>
+		<div style="margin: 0 0 30px 0;">
+			<label for="uploadUserProfile" style="display: block;">
+		  		<div style="
+		  			max-width: 150px;
+		  			height: 150px;
+		  			margin: 0 auto;
+		  			background-position: center;
+		  			background-size: cover;
+		  			background-image: url({{serv.user.profile}});
+		  			bproduct-radius: 50%;
+		  		"></div>	
+		  	</label>
+		 	<input type="file" (change)="onFileSelected($event)" style="display: none;" id="uploadUserProfile" />
+		</div>
+		<div class="pwhx">
+			<div class="edfr">
+				<div class="txtc" style="font-size: 22px;">
+					{{serv.user.name}}
+					<a title="Update Bio" class="update-btn" (click)="updateFormType = 'name';updateFormTitle='Change name';" ><i class="fa fa-pencil"></i></a>
+				</div>
+			</div>
+
+			<div class="edfr" style="padding: 0 10px;">
+				<i class="fa fa-envelope" aria-hidden="true"></i> 
+				<span class="txtc">{{serv.user.email}}</span>
+				<a title="Update email" class="update-btn" (click)="updateFormType = 'email';updateFormTitle='Update email'" ><i class="fa fa-pencil"></i></a>
+			</div>
+			<div class="edfr" style="padding:0 10px;">
+				<i class="fa fa-phone" aria-hidden="true"> </i> 
+				<span class="txtc">{{serv.user.contact}}</span>
+				<a title="Update contact" class="update-btn" (click)="updateFormType = 'contact';updateFormTitle='Update contact';" ><i class="fa fa-pencil"></i></a>
+			</div>
+			<div class="edfr">
+				<div class="hdsd">
+					<i class="fa fa-home" aria-hidden="true"></i>
+					Home Address
+					<a title="Update Home Address" class="update-btn" (click)="address_type='HOME';updateFormType = 'home_address';updateFormTitle='Update home address';" ><i class="fa fa-pencil"></i></a>
+				</div>
+				<div class="txtc" *ngIf="!serv.user.home_address">
+					<a class="csr" (click)="address_type='HOME';updateFormType = 'home_address';updateFormTitle='Add home address';">Add home address</a>
+				</div>
+				<div class="txtc" *ngIf="serv.user.home_address">
+					<div class="pafl">
+						{{serv.user.home_address.line_one}}
+						{{serv.user.home_address.line_two}}
+						{{serv.user.home_address.line_three}}
+					</div>
+					<div class="pafl">
+						{{serv.user.home_address.city}},					{{serv.user.home_address.state}} -
+						{{serv.user.home_address.pincode}}
+					</div>
+				</div>
+			</div>
+			<div  class="edfr">
+				<div class="hdsd">
+					<i class="fa fa-briefcase" aria-hidden="true"></i>
+					Office Address
+					<a title="Update Office Address" class="update-btn" (click)="address_type='OFFICE';updateFormTitle='Add ofiice address';updateFormType = 'office_address'" ><i class="fa fa-pencil"></i></a>
+				</div>
+				<div class="txtc"  *ngIf="!serv.user.office_address">
+					<a class="csr" (click)="address_type='OFFICE';updateFormTitle='Add ofiice address';updateFormType = 'office_address';">Add office address</a>
+				</div>
+				<div class="txtc" *ngIf="serv.user.office_address">
+					<div class="pafl">
+						{{serv.user.office_address.line_one}}
+						{{serv.user.office_address.line_two}}
+						{{serv.user.office_address.line_three}}
+					</div>
+					<div class="pafl">
+						{{serv.user.office_address.city}},
+						{{serv.user.office_address.state}} -
+						{{serv.user.office_address.pincode}}
+					</div>
+				</div>
+			</div>
+
+			<a (click)="serv.logout()" style="
+				text-transform: uppercase;margin: 20px 10px;padding: 0 30px;line-height: 35px;display:inline-block;font-weight: bold;color: #FFF;background: red;cursor: pointer;bproduct-radius: 3px;">Log Out</a>
+			</div>
+	</div><!-- . left profile pane -->
+
+
+	<!-- user products -->
+	<div class="pdgf productspane" >
+		Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eveniet tenetur corrupti exercitationem dolorum esse eligendi, blanditiis earum vero. Debitis illo autem facilis perspiciatis sequi sint ipsam ut at dolorem! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore, dolorem magnam? Corporis suscipit, sint accusamus aut consectetur id itaque nam laboriosam blanditiis accusantium eius omnis veniam modi adipisci inventore soluta? Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, cumque! Magni sed quis eaque, ad expedita neque, architecto obcaecati reiciendis optio autem officiis suscipit dolore accusantium repudiandae dolores enim libero! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio natus eos quisquam aliquid minima sequi repellat tempora officia veniam facere nulla culpa esse ipsa omnis, accusamus fuga blanditiis saepe deserunt!
+	</div>
+	<!-- .user products -->
+</div>
+
+<div class="" style="padding: 0 calc(2vw - 10px);" >
+	<div style="font-weight: normal;font-size: 20px;">My Products</div>
+	<br />
+	<div *ngIf="serv.user.products.length < 1" style="height: 100vh;position: relative;text-align: center;">
+		No Orders yet.
+		<!-- <img src="https://www.seekpng.com/png/detail/287-2873882_png-royalty-free-empty-box-clipart.png" style="position: absolute;margin: auto;"> -->
+	</div>
+	<div *ngIf="serv.user.products.length >= 1"  >
+		<div class="product-pane" style="display: flex;line-height: 30px; font-weight: bold;background: #eee;" >
+			<div style="flex: 2;text-align: center;"> </div>
+			<div style="flex: 20;">Product name</div>
+			<div style="flex: 3;text-align: right;">Views</div>
+			<div style="flex: 2;text-align: right;">Sales</div>
+			<div style="flex: 2;text-align: right;">Price</div>
+			<div style="flex: 2;text-align: center;"></div>
+		</div>
+		<div class="product-pane" *ngFor="let product of serv.user.products" style="display: flex;" >
+			<div style="flex: 2;text-align: center;">
+					<img src="{{product.first_imgurl}}" style="height: 50px;" /> 
+			</div>
+			<div style="flex: 20;">
+				<a [routerLink]="['/product/' + product._id]" style="color: black;">
+					{{product.name | slice : 0 : 100 }}
+				</a>
+			</div>
+			<div style="flex: 3;text-align: right;">{{product.price}}</div>
+			<div style="flex: 2;text-align: right;">{{product.price}}</div>
+			<div style="flex: 2;text-align: right;">{{product.price}} </div>
+			<div style="flex: 2;text-align: center;">
+				<i title="Edit {{product.name}}" class="fa fa-pencil"></i>
+				<i title="Delete {{product.name}}" class="fa fa-trash"></i>
+			</div>
+		</div>
+		<!-- pagination buttons -->
+		<br /><br />
+		<div class="pagination-btn"  *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" style="border:none;margin-right: 4px;">{{i}}</div>
+	</div>
+</div>
+
+
+<app-footer></app-footer>

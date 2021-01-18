@@ -1,0 +1,83 @@
+<app-header></app-header>
+
+
+<div class="" >
+	<br>
+	<br>
+	<br>
+    <div class="" style="padding: 0 20px;max-width: 420px;" >
+    	
+        <form  [formGroup]="productForm" (ngSubmit)="addProduct()">
+            <h4 class="title">List your new product on shopmart</h4>
+            <hr class="divisor">
+
+            <div class="alert alert-danger" *ngIf="err">
+                <strong>Error!</strong> {{err}}.
+            </div>
+
+            
+            <div class="alert alert-info" *ngIf="suc">
+                Account created successfully <strong>Sign In</strong>
+            </div>
+            
+           <!-- files upload  -->
+           <input type="file" (change)="onFileSelected($event)" multiple id="uploadUserProfile" />
+           <!-- // files upload  -->
+
+           <br /><br />
+
+            <div class="form-group prdForm">
+				<label>Product name</label>
+                <input type="text" class="form-control"  aria-describedby="emailHelp" 
+                    formControlName="name"
+                />
+            </div>
+            <div class="form-group prdForm">
+				<label>Company</label>
+                <input type="text" class="form-control"  aria-describedby="emailHelp" 
+                    formControlName="company"
+                />
+            </div>
+            <div class="form-group prdForm">
+				<label>Price</label>
+                <input type="text" class="form-control"  aria-describedby="emailHelp" 
+                    formControlName="price"
+                />
+            </div>
+            <div class="form-group prdForm">
+				<label>Type</label>
+                <input type="text" class="form-control"  aria-describedby="emailHelp" 
+                    formControlName="type"
+                />
+            </div>
+            <div class="form-group prdForm">
+				<label>Category</label>
+                <input type="text" class="form-control"  aria-describedby="emailHelp" 
+                    formControlName="category"
+                />
+            </div>
+            <div class="form-group prdForm">
+				<label>Description</label>
+                <textarea type="text" class="form-control"   
+                    formControlName="description" rows="5"
+                ></textarea>
+			</div>
+
+            <div class="form-group prdForm">
+				<label>Terms and Conditions</label>
+                <input type="checkbox"  (click) = "tnc = !tnc"
+                    formControlName="tnc" style="width: auto;display: inline;outline: none;"
+				/>
+				<span>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt modi consequatur, quo quod officia aliquid libero possimus necessitatibus adipisci rem dolores, vitae ex mollitia similique, suscipit et ullam ut autem!
+				</span>
+            </div>
+            <button type="submit" [disabled]="tnc" class="btn btn-primary topBtn">Add Product</button>
+        </form>
+    </div>
+
+	
+</div>
+
+
+<app-footer></app-footer>
