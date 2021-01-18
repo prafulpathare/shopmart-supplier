@@ -1,5 +1,4 @@
-ng serve
+# Shopmart Supplier 
+### Angular
 
-
-for chart refer
-https://www.freakyjolly.com/angular-chart-js-tutorial-using-ng2-charts-with-examples/#.YABi5HUzaNJ
+[chart refer](https://www.freakyjolly.com/angular-chart-js-tutorial-using-ng2-charts-with-examples/#.YABi5HUzaNJ)
