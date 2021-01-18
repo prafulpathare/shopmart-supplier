@@ -9,4 +9,5 @@ $ npm install --save chart.js
 $ ng serve
 ```
 
-[chart reference](https://www.freakyjolly.com/angular-chart-js-tutorial-using-ng2-charts-with-examples/#.YABi5HUzaNJ)
+References
+- [freakyjolly.com](https://www.freakyjolly.com/angular-chart-js-tutorial-using-ng2-charts-with-examples/#.YABi5HUzaNJ)
