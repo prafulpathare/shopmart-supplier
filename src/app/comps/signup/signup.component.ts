@@ -20,48 +20,50 @@ export class SignupComponent implements OnInit {
 		email: new FormControl('')
 	});
 	signUpForm = new FormGroup({
-		uid: new FormControl(''),
-		full_name: new FormControl(''),
+		name: new FormControl(''),
+		business_name: new FormControl(''),
 		email: new FormControl(''),
 		contact: new FormControl(''),
 		password: new FormControl(''),
+		pan: new FormControl(''),
+		gst: new FormControl(''),
 		token: new FormControl(''),
 	});
 
 	constructor(
 		private http: HttpClient,
-	    private serv: UserService,
-	    public mainServ: MainService,
-	    private router: Router
+		private serv: UserService,
+		public mainServ: MainService,
+		private router: Router
 	) {
-			
+
 	}
 
 	ngOnInit(): void {
-		this.status = 0;	
+		this.status = 0;
 	}
 
 
-	makeSignUp(){
-		
+	makeSignUp() {
+
+
 		this.http.post(this.mainServ.getUserApi() + "/register", {
-	      "uid": this.signUpForm.controls['uid'].value,
-	      "name": this.signUpForm.controls['full_name'].value,
-	      "email": this.signUpForm.controls['email'].value,
-	      "contact": this.signUpForm.controls['contact'].value,
-	      "password": this.signUpForm.controls['password'].value,
-	      "pan": this.signUpForm.controls['pan'].value,
-	      "token": this.signUpForm.controls['token'].value,
-	    }).subscribe(
-	      user => {
-	      	if(user['email'].length > 5) {
-	      		this.router.navigate(['/signin']);
-	      	}
-	      },
-	      error => {
-	      	console.log(error)
-	      }
-	    )
+			"name": this.signUpForm.controls['name'].value,
+			"business_name": this.signUpForm.controls['business_name'].value,
+			"email": this.signUpForm.controls['email'].value,
+			"contact": this.signUpForm.controls['contact'].value,
+			"password": this.signUpForm.controls['password'].value,
+			"pan": this.signUpForm.controls['pan'].value,
+			"gst": this.signUpForm.controls['gst'].value,
+			"token": this.signUpForm.controls['token'].value,
+		}).subscribe(
+			user => {
+				this.router.navigate(['/signin']);
+			},
+			error => {
+				console.log(error)
+			}
+		)
 	}
 	addEmail() {
 		this.err2 = null;
@@ -72,9 +74,10 @@ export class SignupComponent implements OnInit {
 		).subscribe(
 			data => {
 				this.status = 2;
+				this.signUpForm.controls['email'].setValue(email);
 			},
-			err =>  {
-				if(err.status == 302) this.err2 = "user already exists";
+			err => {
+				if (err.status == 302) this.err2 = "user already exists";
 			}
 		)
 	}
